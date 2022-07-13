@@ -1,5 +1,7 @@
 import time
 import unittest
+
+import HtmlTestRunner
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
@@ -22,17 +24,11 @@ class Test_irctc(unittest.TestCase):
 
         title = driver.title
         self.assertEqual(title, "IRCTC Next Generation eTicketing System")
-        window_before = driver.window_handles[0]
+       # window_before = driver.window_handles[0]
         driver.find_element(by=By.XPATH, value="//button[contains(text(),'OK')]").click()
         driver.find_element(by=By.XPATH, value="//app-header/div[1]/div[2]/a[1]/i[1]").click()
         driver.find_element(by=By.XPATH,
                             value="//app-header/div[@id='slide-menu']/p-sidebar[1]/div[1]/nav[1]/ul[1]/li[5]/a[1]/label[1]").click()
-        time.sleep(3)
-        window_after = driver.window_handles[1]
-        driver.switch_to.window(window_after)
-        global url
-        url = driver.current_url
-        time.sleep(3)
 
     def test_search_flight(self):
         self.driver = webdriver.Chrome(executable_path="D:\chromedriver.exe")
@@ -41,10 +37,6 @@ class Test_irctc(unittest.TestCase):
         driver.get("https://www.air.irctc.co.in/")
         driver.maximize_window()
         self.assertEqual(driver.title, "Air Ticket Booking | Book Flight Tickets | Cheap Air Fare - IRCTC Air")
-
-        # -----selecting one way or round ticket-------
-
-        driver.find_element(by=By.XPATH, value="//label[contains(text(),'One Way')]").click()
         time.sleep(5)
         driver.find_element(by=By.XPATH, value="//button[text()='Later']").click()
 
@@ -126,4 +118,4 @@ class Test_irctc(unittest.TestCase):
 
 
 if __name__ == "__main__":
-    unittest.main()
+    unittest.main(testRunner=HtmlTestRunner.HTMLTestRunner(output='..\\Reports'))
